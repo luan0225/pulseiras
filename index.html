@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Entrada da Festa</title>
+    <style>
+        /* Estilos básicos para o seu layout (você pode personalizar!) */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            font-size: 16px;
+        }
+        #nomePessoa {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .mensagem {
+            margin-top: 15px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Controle de Entrada da Festa</h1>
+        <p>Digite o número da pulseira:</p>
+        <input type="text" id="numeroPulseira" placeholder="Ex: 123" onkeyup="verificarPulseira()">
+        <div class="mensagem" id="nomePessoa"></div>
+    </div>
+
+    <script>
+        // Array para simular os dados das pessoas
+        // Em um sistema real, isso viria de um banco de dados
+        const dadosPessoas = {
+            // Convidados (pulseiras de 1 a 20)
+            1: "Alice Silva (Convidada)",
+            2: "Bruno Mendes (Convidado)",
+            3: "Carla Ferreira (Convidada)",
+            4: "Daniel Souza (Convidado)",
+            5: "Elisa Costa (Convidada)",
+            6: "Fernando Lima (Convidado)",
+            7: "Giovana Santos (Convidada)",
+            8: "Hugo Oliveira (Convidado)",
+            9: "Isabela Pereira (Convidada)",
+            10: "João Rodrigues (Convidado)",
+            11: "Karen Almeida (Convidada)",
+            12: "Luiz Barbosa (Convidado)",
+            13: "Maria Dias (Convidada)",
+            14: "Nuno Castro (Convidado)",
+            15: "Olívia Fernandes (Convidada)",
+            16: "Pedro Gomes (Convidado)",
+            17: "Quitéria Rocha (Convidada)",
+            18: "Rafael Martins (Convidado)",
+            19: "Sofia Carvalho (Convidada)",
+            20: "Thiago Nunes (Convidado)",
+
+            // Compradores (exemplo, você preencheria com os nomes reais)
+            21: "Laura Viana",
+            22: "Marcelo Pires",
+            23: "Natália Flores",
+            24: "Otávio Correia",
+            // ... e assim por diante até 200
+            200: "Zélia Ribeiro"
+        };
+
+        function verificarPulseira() {
+            const input = document.getElementById('numeroPulseira');
+            const nomePessoaDiv = document.getElementById('nomePessoa');
+            const numero = parseInt(input.value);
+
+            if (isNaN(numero) || numero < 1 || numero > 200) {
+                nomePessoaDiv.textContent = "Número de pulseira inválido.";
+                nomePessoaDiv.style.color = "red";
+            } else if (dadosPessoas[numero]) {
+                nomePessoaDiv.textContent = dadosPessoas[numero];
+                nomePessoaDiv.style.color = "green"; // Exemplo: cor verde para nome encontrado
+            } else {
+                nomePessoaDiv.textContent = "Pulseira não encontrada ou não cadastrada.";
+                nomePessoaDiv.style.color = "orange"; // Exemplo: cor laranja para não encontrado
+            }
+        }
+    </script>
+</body>
+</html>
