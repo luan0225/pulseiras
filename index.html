@@ -3,101 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Entrada da Festa</title>
+    <title>Controle de Entrada - Arraial em Vegas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos básicos para o seu layout (você pode personalizar!) */
+        /* Estilos para o corpo da página - Fundo Temático */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Open Sans', sans-serif; /* Fonte padrão mais legível */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f0f0f0;
             margin: 0;
-        }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        input[type="text"] {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 200px;
-            font-size: 16px;
-        }
-        #nomePessoa {
-            font-size: 20px;
-            font-weight: bold;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 50%, #B22222 100%); /* Gradiente dourado/laranja/vermelho */
             color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Leve sombra no texto */
         }
-        .mensagem {
-            margin-top: 15px;
-            color: #888;
+
+        /* Container principal - Cartão de Controle */
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); /* Fundo branco semi-transparente */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Sombra mais forte */
+            text-align: center;
+            margin-bottom: 30px;
+            border: 5px solid #4CAF50; /* Borda verde viva, remetendo a jogos */
+            max-width: 400px; /* Limita a largura */
+            width: 90%; /* Responsividade */
+            animation: fadeIn 1s ease-out; /* Animação de entrada */
+        }
+
+        /* Título do sistema */
+        h1 {
+            font-family: 'Luckiest Guy', cursive; /* Fonte divertida e chamativa */
+            color: #8B0000; /* Vermelho escuro */
+            text-transform: uppercase;
+            font-size: 2.8em; /* Tamanho maior */
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0px #FFD700, 
+                                 -3px -3px 0px #000; /* Sombra dourada e preta para efeito de neon */
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Campo de entrada */
+        input[type="text"] {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #DC143C; /* Borda vermelha vibrante */
+            border-radius: 8px;
+            width: calc(100% - 28px); /* Ajuste para padding e borda */
+            font-size: 1.2em;
+            text-align: center;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Sombra interna */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus {
+            border-color: #007bff; /* Borda azul ao focar */
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Brilho azul ao focar */
+            outline: none; /* Remove outline padrão */
+        }
+
+        /* Botão de verificar */
+        button {
+            padding: 15px 30px;
+            background-color: #007bff; /* Azul clássico */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.3em;
+            font-weight: bold;
+            letter-spacing: 1px; /* Espaçamento entre letras */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra para profundidade */
+            border: 2px solid #0056b3; /* Borda um pouco mais escura */
+        }
+        button:hover {
+            background-color: #0056b3; /* Azul mais escuro */
+            transform: translateY(-2px); /* Efeito de "subir" */
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4); /* Sombra maior no hover */
+        }
+        button:active {
+            transform: translateY(0); /* Volta ao normal ao clicar */
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mensagem de resultado (nome da pessoa) */
+        #nomePessoa {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 2.2em; /* Tamanho maior */
+            font-weight: bold;
+            margin-top: 25px;
+            padding: 10px;
+            border-radius: 8px;
+            min-height: 40px; /* Garante altura mínima mesmo vazio */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        #nomePessoa[style*="green"] { /* Cor para entrada válida */
+            color: #008000; /* Verde escuro */
+            background-color: #E6FFE6; /* Fundo verde claro */
+            border: 2px dashed #006400; /* Borda tracejada */
+        }
+        #nomePessoa[style*="red"] { /* Cor para inválido */
+            color: #B22222; /* Vermelho forte */
+            background-color: #FFE6E6;
+            border: 2px dashed #8B0000;
+        }
+        #nomePessoa[style*="orange"] { /* Cor para não encontrado */
+            color: #FF8C00; /* Laranja forte */
+            background-color: #FFF8E6;
+            border: 2px dashed #FF4500;
+        }
+        #nomePessoa[style*="blue"] { /* Cor para pulseira já usada */
+            color: #00008B; /* Azul marinho */
+            background-color: #E6F2FF;
+            border: 2px dashed #0000CD;
+        }
+
+        /* Container da lista de pessoas que entraram */
+        .lista-entrada {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            width: 350px; /* Largura da lista */
+            max-height: 350px; /* Altura máxima para a lista rolar */
+            overflow-y: auto;
+            border: 5px solid #DC143C; /* Borda vermelha como a da caixa */
+            animation: fadeIn 1.2s ease-out; /* Animação de entrada */
+        }
+        .lista-entrada h2 {
+            font-family: 'Luckiest Guy', cursive;
+            margin-top: 0;
+            color: #007bff; /* Azul */
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #FFD700; /* Sombra dourada */
+        }
+        .lista-entrada ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        .lista-entrada li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Linha mais discreta */
+            font-size: 1.1em;
+            color: #444;
+            display: flex;
+            justify-content: space-between; /* Espaçamento entre número e nome */
+            align-items: center;
+        }
+        .lista-entrada li:last-child {
+            border-bottom: none;
+        }
+
+        /* Animação de fade in */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Media Queries para responsividade em telas menores */
+        @media (max-width: 600px) {
+            .container, .lista-entrada {
+                width: 95%;
+                padding: 25px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            #nomePessoa {
+                font-size: 1.8em;
+            }
+            button {
+                font-size: 1.1em;
+                padding: 12px 25px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Controle de Entrada da Festa</h1>
+        <h1>Arraial em Vegas</h1>
+        <p>Controle de Entrada da Festa</p>
         <p>Digite o número da pulseira:</p>
-        <input type="text" id="numeroPulseira" placeholder="Ex: 123" onkeyup="verificarPulseira()">
+        <input type="text" id="numeroPulseira" placeholder="Ex: 123">
+        <button onclick="verificarPulseira()">Verificar Entrada</button>
         <div class="mensagem" id="nomePessoa"></div>
+    </div>
+
+    <div class="lista-entrada">
+        <h2>Pessoas que Entraram</h2>
+        <ul id="listaPessoasEntraram">
+            </ul>
     </div>
 
     <script>
         // Array para simular os dados das pessoas
-        // Em um sistema real, isso viria de um banco de dados
         const dadosPessoas = {
-            // Convidados (pulseiras de 1 a 20)
-            1: "Alice Silva (Convidada)",
-            2: "Bruno Mendes (Convidado)",
-            3: "Carla Ferreira (Convidada)",
-            4: "Daniel Souza (Convidado)",
-            5: "Elisa Costa (Convidada)",
-            6: "Fernando Lima (Convidado)",
-            7: "Giovana Santos (Convidada)",
-            8: "Hugo Oliveira (Convidado)",
-            9: "Isabela Pereira (Convidada)",
-            10: "João Rodrigues (Convidado)",
-            11: "Karen Almeida (Convidada)",
-            12: "Luiz Barbosa (Convidado)",
-            13: "Maria Dias (Convidada)",
-            14: "Nuno Castro (Convidado)",
-            15: "Olívia Fernandes (Convidada)",
-            16: "Pedro Gomes (Convidado)",
-            17: "Quitéria Rocha (Convidada)",
-            18: "Rafael Martins (Convidado)",
-            19: "Sofia Carvalho (Convidada)",
-            20: "Thiago Nunes (Convidado)",
-
-            // Compradores (exemplo, você preencheria com os nomes reais)
-            21: "Laura Viana",
-            22: "Marcelo Pires",
-            23: "Natália Flores",
-            24: "Otávio Correia",
-            // ... e assim por diante até 200
-            200: "Zélia Ribeiro"
+            1: "", 2: "",
+            3: "", 4: "",
+            5: "", 6: "",
+            7: "", 8: "",
+            9: "", 10: "",
+            11: "Antony", 12: "Felipe Castro",
+            13: "Guilherme cantuaria", 14: "Everton souza",
+            15: "Marta Ramos", 16: "Paulo Lopez",
+            17: "Endrew lucas", 18: "Antonio Rodriguez",
+            19: "Jean Silva", 20: "Lanna Vieira",
+            21: "", 22: "", 23: "",
+            /* Add names for bracelets up to 200 here */
+            200: "" 
         };
+
+        const pulseirasJaUsadas = [];
 
         function verificarPulseira() {
             const input = document.getElementById('numeroPulseira');
             const nomePessoaDiv = document.getElementById('nomePessoa');
+            const listaPessoasEntraram = document.getElementById('listaPessoasEntraram');
             const numero = parseInt(input.value);
+
+            nomePessoaDiv.textContent = "";
+            nomePessoaDiv.removeAttribute('style'); // Limpa estilos anteriores da mensagem
 
             if (isNaN(numero) || numero < 1 || numero > 200) {
                 nomePessoaDiv.textContent = "Número de pulseira inválido.";
                 nomePessoaDiv.style.color = "red";
-            } else if (dadosPessoas[numero]) {
-                nomePessoaDiv.textContent = dadosPessoas[numero];
-                nomePessoaDiv.style.color = "green"; // Exemplo: cor verde para nome encontrado
+                nomePessoaDiv.style.backgroundColor = "#FFE6E6";
+                nomePessoaDiv.style.border = "2px dashed #8B0000";
+                return;
+            }
+
+            if (pulseirasJaUsadas.includes(numero)) {
+                nomePessoaDiv.textContent = `Atenção: Pulseira ${numero} já utilizada por ${dadosPessoas[numero] || 'uma pessoa cadastrada'}.`;
+                nomePessoaDiv.style.color = "blue";
+                nomePessoaDiv.style.backgroundColor = "#E6F2FF";
+                nomePessoaDiv.style.border = "2px dashed #0000CD";
+                return;
+            }
+
+            if (dadosPessoas.hasOwnProperty(numero) && dadosPessoas[numero] !== "") {
+                const nome = dadosPessoas[numero];
+                nomePessoaDiv.textContent = nome;
+                nomePessoaDiv.style.color = "green";
+                nomePessoaDiv.style.backgroundColor = "#E6FFE6";
+                nomePessoaDiv.style.border = "2px dashed #006400";
+
+                pulseirasJaUsadas.push(numero);
+
+                const novoItemLista = document.createElement('li');
+                novoItemLista.textContent = `${numero} - ${nome}`;
+                novoItemLista.dataset.pulseiraNumero = numero; 
+
+                let inserido = false;
+                for (let i = 0; i < listaPessoasEntraram.children.length; i++) {
+                    const itemAtual = listaPessoasEntraram.children[i];
+                    const numeroItemAtual = parseInt(itemAtual.dataset.pulseiraNumero);
+
+                    if (numero < numeroItemAtual) {
+                        listaPessoasEntraram.insertBefore(novoItemLista, itemAtual);
+                        inserido = true;
+                        break;
+                    }
+                }
+
+                if (!inserido) {
+                    listaPessoasEntraram.appendChild(novoItemLista);
+                }
+
+                input.value = '';
             } else {
                 nomePessoaDiv.textContent = "Pulseira não encontrada ou não cadastrada.";
-                nomePessoaDiv.style.color = "orange"; // Exemplo: cor laranja para não encontrado
+                nomePessoaDiv.style.color = "orange";
+                nomePessoaDiv.style.backgroundColor = "#FFF8E6";
+                nomePessoaDiv.style.border = "2px dashed #FF4500";
             }
         }
     </script>
